@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "apollo-datasource-rest": "^0.1.5",
+    "apollo-engine": "^1.1.2",
+    "apollo-server": "^2.2.0-alpha.0",
+    "apollo-server-cache-memcached": "^0.1.3",
+    "apollo-server-express": "^2.1.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
+    "graphql": "^14.0.2",
+    "graphql-type-json": "^0.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
