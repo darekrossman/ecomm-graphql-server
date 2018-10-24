@@ -28,10 +28,11 @@ const typeDefs = gql`
     categoryId: String
     parentCategoryId: String
     subCategoryId: String
-    price: Float!
-    description: String!
-    sku: String!
-    rating: Float!
+    price: Float
+    description: String
+    sku: String
+    brand: String
+    rating: Float
     thumbnail: Image
     images: [Image]
   }
