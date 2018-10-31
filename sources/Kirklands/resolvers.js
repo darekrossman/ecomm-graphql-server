@@ -4,14 +4,20 @@ const GraphQLJSON = require("graphql-type-json")
 const resolvers = {
   Product: {
     images: async (_source, args, { dataSources }) => {
-      return await dataSources.productsAPI.getProductImages(_source.id)
+      return await dataSources.clientAPI.getProductImages(_source.id)
     },
-    thumbnail: async (_source, args, { dataSources }) => {
-      if (_source.thumbnail) return `http://s7d5.scene7.com${_source.thumbnail}`
-      const images = await dataSources.productsAPI.getProductImages(_source.id)
+    thumbnail: async ({ id, thumbnail }, args, { dataSources }) => {
+      if (thumbnail) {
+        return /^\//.test(thumbnail)
+          ? `http://s7d5.scene7.com${thumbnail}`
+          : thumbnail
+      }
+      const images = await dataSources.clientAPI.getProductImages(id)
       return images[0]
     }
   },
+
+  Cart: {},
 
   Image: {
     src: src => src,

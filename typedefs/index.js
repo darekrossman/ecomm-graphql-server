@@ -24,7 +24,7 @@ const typeDefs = gql`
   type Product {
     id: ID!
     name: String!
-    path: String!
+    path: String
     categoryId: String
     parentCategoryId: String
     subCategoryId: String
@@ -34,7 +34,14 @@ const typeDefs = gql`
     brand: String
     rating: Float
     thumbnail: Image
+    quantity: Int
+    deliveryOptions: [ProductDeliveryOption]
+    deliveryMethod: String
     images: [Image]
+  }
+
+  type Cart {
+    items: [Product]!
   }
 
   type NavMenu {
@@ -42,11 +49,18 @@ const typeDefs = gql`
     levels: JSON
   }
 
+  type ProductDeliveryOption {
+    key: String!
+    value: String!
+    primaryLabel: String
+    secondaryLabel: String
+  }
+
   type Query {
     getNavMenu: NavMenu
-
     getProducts(path: String!): [Product]
     getProduct(path: String!): Product
+    getCart: Cart
   }
 `
 

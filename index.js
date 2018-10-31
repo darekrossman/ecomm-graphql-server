@@ -2,8 +2,7 @@ const { ApolloServer, gql } = require("apollo-server")
 const typeDefs = require("./typedefs")
 const baseResolvers = require("./resolvers")
 
-const NavMenuAPI = require("./sources/Kirklands/NavMenu")
-const ProductsAPI = require("./sources/Kirklands/Products")
+const KirklandsAPI = require("./sources/Kirklands/api")
 const resolvers = require("./sources/Kirklands/resolvers")
 
 const ENGINE_API_KEY = "service:subpopular-4512:BOzArVEjePRR86E7D8uCiA"
@@ -14,10 +13,12 @@ const server = new ApolloServer({
   useGETForQueries: true,
   dataSources: () => {
     return {
-      productsAPI: new ProductsAPI(),
-      navMenuAPI: new NavMenuAPI()
+      clientAPI: new KirklandsAPI()
     }
   },
+  context: ({ req, res }) => ({
+    cookie: req.headers["x-cookie-payload"]
+  }),
   introspection: true,
   playground: true
 })
