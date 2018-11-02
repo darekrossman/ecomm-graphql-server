@@ -9,7 +9,7 @@ const resolvers = {
     thumbnail: async ({ id, thumbnail }, args, { dataSources }) => {
       if (thumbnail) {
         return /^\//.test(thumbnail)
-          ? `http://s7d5.scene7.com${thumbnail}`
+          ? `https://s7d5.scene7.com${thumbnail}`
           : thumbnail
       }
       const images = await dataSources.clientAPI.getProductImages(id)
