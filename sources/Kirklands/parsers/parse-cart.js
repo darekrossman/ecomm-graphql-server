@@ -73,7 +73,7 @@ const extractItems = $ => {
             productId,
             productVariantId,
             itemGUID,
-            itemUUID,
+            uuid: itemUUID,
             parentCategoryId,
             categoryId,
             quantity: toNumber(quantity),
@@ -110,7 +110,7 @@ const extractItems = $ => {
                       .replace(/\s+/g, " ") || null
                 }
               }),
-            itemMergeUUID: _itemMergeUUID[1],
+            mergeUUID: _itemMergeUUID[1],
             deliveryOptionErrors: $item
               .find(".delivery-options > p.alert")
               .toArray()
@@ -133,7 +133,6 @@ const extractItems = $ => {
           }
         })
       : []
-  console.log(JSON.stringify(items, null, 2))
   return { items, hasItems: items.length > 0 }
 }
 

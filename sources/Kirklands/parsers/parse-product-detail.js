@@ -55,16 +55,43 @@ module.exports = async data => {
       .text()
       .trim()
       .replace("Item #", ""),
+    quantity: 1,
     categoryId: productForm.find('[name="categoryId"]').val(),
     parentCategoryId: productForm.find('[name="parentCategoryId"]').val(),
     subCategoryId: productForm.find('[name="subCategoryId"]').val(),
     productVariantId: productForm.find('[name="productVariantId"]').val(),
+    deliveryOptions: productForm
+      .find(".delivery-options .delivery-form-check")
+      .not("[hidden]")
+      .not(".hidden")
+      .toArray()
+      .map(item => {
+        return {
+          key: $(item)
+            .find(".delivery-form-check-input")
+            .attr("name"),
+          value: $(item)
+            .find(".delivery-form-check-input")
+            .attr("value"),
+          primaryLabel:
+            $(item)
+              .find(".label-primary")
+              .text() || null,
+          secondaryLabel:
+            $(item)
+              .find(".label-secondary")
+              .text() || null
+        }
+      }),
     rating: parseFloat(
       $(".bvseo-ratingValue")
         .text()
         .trim() || 0.0
-    )
+    ),
+    reviewCount: parseInt($(".bvseo-reviewCount").text() || "0", 10) || 0
   }
+
+  result.deliveryMethod = result.deliveryOptions[0].value
 
   return result
 }

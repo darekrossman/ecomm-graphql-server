@@ -1,5 +1,5 @@
+const qs = require("querystring")
 const { RESTDataSource } = require("apollo-datasource-rest")
-
 const parseProductList = require("./parsers/parse-product-list")
 const parseProductDetail = require("./parsers/parse-product-detail")
 const parseNavMenu = require("./parsers/parse-nav-menu")
@@ -46,6 +46,48 @@ class ProductsAPI extends RESTDataSource {
   }
 
   async getCart() {
+    return parseCart(await this.get("/checkout/basket.jsp"))
+  }
+
+  async addToCart(product) {
+    const body = qs.stringify({
+      ts: new Date().getTime(),
+      action: "addProduct",
+      productName: product.name,
+      productId: product.id,
+      categoryId: product.categoryId,
+      parentCategoryId: product.parentCategoryId,
+      subCategoryId: product.subCategoryId,
+      quantity: product.quantity,
+      productVariantId: product.productVariantId,
+      deliveryMethod: product.deliveryMethod,
+      selectedStore: "1847",
+      crossSellItem: "",
+      itemGUID: "",
+      isUpdate: 1,
+      deliveryMethodNotRequired: true,
+      prefix: ".EntityBody"
+    })
+
+    const addResponse = await this.post("/checkout/add_item_pc.cmd", body, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+      }
+    })
+
+    if (
+      addResponse
+        .toLowerCase()
+        .indexOf("has been updated in your shopping cart") > -1
+    ) {
+      return parseCart(await this.get("/checkout/basket.jsp"))
+    }
+  }
+
+  async removeFromCart(uuid) {
+    const res = await this.get(
+      `/checkout/delete_item_from_order.cmd?itemUUID=${uuid}`
+    )
     return parseCart(await this.get("/checkout/basket.jsp"))
   }
 }

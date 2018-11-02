@@ -15,6 +15,14 @@ const resolvers = {
     getCart: async (_source, { path }, { dataSources }) => {
       return dataSources.clientAPI.getCart()
     }
+  },
+  Mutation: {
+    addToCart: async (_source, data, { dataSources }) => {
+      return dataSources.clientAPI.addToCart(data)
+    },
+    removeFromCart: async (_source, { uuid }, { dataSources }) => {
+      return dataSources.clientAPI.removeFromCart(uuid)
+    }
   }
 }
 

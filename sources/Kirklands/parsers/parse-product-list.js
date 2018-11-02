@@ -49,15 +49,28 @@ module.exports = (response, params = {}) => {
         : {}
 
       const [m, id] = productUrl.match(/\/(\d*).uts$/) // eslint-disable-line no-unused-vars
+
+      const thumbnail = $el
+        .find(".result-image img")
+        .attr("data-src")
+        .replace("http:", "https:")
+
+      const thumbnailUrlParts = url.parse(thumbnail).pathname.split("/")
+      const sku = thumbnailUrlParts[thumbnailUrlParts.length - 1].replace(
+        /_.*$/,
+        ""
+      )
+
       return {
         id,
         name: $el.find(".result-title").text(),
-        thumbnail: url.parse($el.find(".result-image img").attr("data-src"))
-          .pathname,
+        thumbnail: url.parse(thumbnail).pathname,
         path: productUrl,
-        description: null,
+        sku,
+        quantity: 1,
         price: parseFloat(price),
         rating: getRating($el),
+        reviewCount: reviewCount ? parseInt(reviewCount, 10) : 0,
         categoryId: categoryId,
         parentCategoryId: parentCategoryId,
         subCategoryId: subCategoryId
