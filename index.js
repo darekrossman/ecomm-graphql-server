@@ -20,7 +20,8 @@ const server = new ApolloServer({
     cookie: req.headers["x-cookie-payload"]
   }),
   introspection: true,
-  playground: true
+  playground: true,
+  cacheControl: { defaultMaxAge: 60 }
 })
 
 server.listen({ port: 4000 })

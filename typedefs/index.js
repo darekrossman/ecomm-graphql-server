@@ -3,16 +3,16 @@ const { gql } = require("apollo-server")
 const typeDefs = gql`
   scalar JSON
 
-  type S7Optimized {
+  type S7Optimized @cacheControl(maxAge: 300) {
     fluid(maxWidth: Int): Picture
   }
 
-  type Image {
+  type Image @cacheControl(maxAge: 300) {
     src: String
     s7: S7Optimized
   }
 
-  type Picture {
+  type Picture @cacheControl(maxAge: 300) {
     src: String
     srcSet: String
     sizes: String
@@ -21,7 +21,7 @@ const typeDefs = gql`
     aspectRatio: Float
   }
 
-  type Product {
+  type Product @cacheControl(maxAge: 300) {
     id: ID!
     uuid: String
     name: String!
@@ -48,12 +48,12 @@ const typeDefs = gql`
     items: [Product]!
   }
 
-  type NavMenu {
+  type NavMenu @cacheControl(maxAge: 300) {
     id: ID!
     levels: JSON
   }
 
-  type ProductDeliveryOption {
+  type ProductDeliveryOption @cacheControl(maxAge: 300) {
     key: String!
     value: String!
     primaryLabel: String
