@@ -12,7 +12,7 @@ const resolvers = {
     getProduct: async (_source, { path }, { dataSources }) => {
       return dataSources.clientAPI.getProduct(path)
     },
-    getCart: async (_source, { path }, { dataSources }) => {
+    getCart: async (_source, { path }, { dataSources }, { cacheControl }) => {
       return dataSources.clientAPI.getCart()
     }
   },

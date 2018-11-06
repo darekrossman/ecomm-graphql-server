@@ -10,7 +10,6 @@ const ENGINE_API_KEY = "service:subpopular-4512:BOzArVEjePRR86E7D8uCiA"
 const server = new ApolloServer({
   typeDefs,
   resolvers: { ...baseResolvers, ...resolvers },
-  useGETForQueries: true,
   dataSources: () => {
     return {
       clientAPI: new KirklandsAPI()
@@ -20,8 +19,7 @@ const server = new ApolloServer({
     cookie: req.headers["x-cookie-payload"]
   }),
   introspection: true,
-  playground: true,
-  cacheControl: { defaultMaxAge: 60 }
+  playground: true
 })
 
 server.listen({ port: 4000 })
